@@ -1,6 +1,7 @@
 const Sauce = require('../models/Sauce');
 const fs = require('fs');
-
+// export de la route pour creer une sauces
+// creation const ; sauvegarde de la sauce
 exports.createSauce = (req, res, next) => {
     console.log(req.body);
     const sauceObject = JSON.parse(req.body.sauce);
@@ -14,7 +15,7 @@ exports.createSauce = (req, res, next) => {
         .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
         .catch(error => res.status(400).json({ error }));
 };
-
+// export de la route pour modifier une sauce et ensuite la mettre a jour
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {
         ...JSON.parse(req.body.sauce),
@@ -24,7 +25,7 @@ exports.modifySauce = (req, res, next) => {
         .then(() => res.status(200).json({ message: 'Objet modifié !' }))
         .catch(error => res.status(400).json({ error }));
 };
-
+// export de la route pour supprimer une sauce , la selectionné et ensuite la supprimé grace a sauce.deleteone
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
@@ -37,18 +38,20 @@ exports.deleteSauce = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
+// export de la route pour selectionné une sauce 
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => res.status(200).json(sauce))
         .catch(error => res.status(404).json({ error }));
 };
-
+// export de la route pour avoir toutes les sauces a l'affichage de l'application
 exports.getAllSauce = (req, res, next) => {
     Sauce.find()
         .then(sauces => res.status(200).json(sauces))
         .catch(error => res.status(400).json({ error }));
 };
+// export de la route pour liké et dislike une sauce ensuite selection de la sauce 
+// mise en place du switch pour configurer les likes et dislikes et ensuite pouvoir la mettre a jour correctement
 exports.likeOneSauce = (req, res, next) => {
     let updatedSauce;
     Sauce.findOne({ _id: req.params.id })

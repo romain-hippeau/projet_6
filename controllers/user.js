@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 const jsonWebToken = require('jsonwebtoken');
-
+// export de la route inscription ; mise en place du hashage par b-crypt et sauvegarde de l'utilisateur
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
@@ -15,7 +15,9 @@ exports.signup = (req, res, next) => {
         })
         .catch(error => res.status(500).json({ error }));
 };
-
+// export de la route login et selection de l'utilisateur
+// mise en place pour voir si l'utilisateur a bien étais crée , ensuite comparaison mot de passe par b-crypt et 
+// de la mise en route du token au login utilisateur
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
         .then(user => {
