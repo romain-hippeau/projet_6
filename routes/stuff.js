@@ -1,3 +1,5 @@
+//ajout de express pour l'infrastucture middleware et de routage et de
+//  express.Router pour créer des gestionnaires de route modulaires.
 const express = require('express');
 const router = express.Router();
 
